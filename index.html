@@ -1,0 +1,325 @@
+
+
+<!DOCTYPE html>
+
+<html lang="ru">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Мой ПВЗ</title>
+
+<style>
+
+body {
+
+  margin:0;
+
+  background:#172139;
+
+  color:white;
+
+  font-family:Arial;
+
+  text-align:center;
+
+}
+
+header {
+
+  background:#273858;
+
+  padding:20px;
+
+  font-size:28px;
+
+  font-weight:bold;
+
+}
+
+.stats {
+
+  display:flex;
+
+  justify-content:space-around;
+
+  padding:15px 5px;
+
+  background:#202e49;
+
+  flex-wrap:wrap;
+
+}
+
+.shop {
+
+  margin:20px auto;
+
+  padding:30px 10px;
+
+  max-width:500px;
+
+  min-height:200px;
+
+  background:#aebbd0;
+
+  border-radius:15px;
+
+  color:#202944;
+
+}
+
+.sign {
+
+  background:#253654;
+
+  color:white;
+
+  padding:15px;
+
+  font-size:25px;
+
+  font-weight:bold;
+
+}
+
+.shelf {
+
+  margin:25px auto;
+
+  padding:15px;
+
+  background:#68482f;
+
+  max-width:260px;
+
+  font-size:35px;
+
+}
+
+.buttons {
+
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:10px;
+
+  padding:12px;
+
+  max-width:500px;
+
+  margin:auto;
+
+}
+
+button {
+
+  padding:17px 5px;
+
+  border:0;
+
+  border-radius:12px;
+
+  color:white;
+
+  font-size:15px;
+
+  font-weight:bold;
+
+  background:#347de0;
+
+}
+
+button:active {opacity:.7}
+
+.green {background:#229b58}
+
+.purple {background:#8751cc}
+
+.orange {background:#d98532}
+
+.red {background:#c84455}
+
+#message {
+
+  margin:15px;
+
+  padding:20px;
+
+  background:#273858;
+
+  border-radius:12px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>📦 МОЙ ПВЗ</header>
+
+<div class="stats">
+
+  <div>💰 <span id="money">500</span>₸</div>
+
+  <div>📦 <span id="parcels">0</span></div>
+
+  <div>📅 День <span id="day">1</span></div>
+
+</div>
+
+<div class="shop">
+
+  <div class="sign">МОЙ ПВЗ</div>
+
+  <h2>🏪</h2>
+
+  <div class="shelf">📦 📦 📦</div>
+
+  <h2>🧑🏻‍💻</h2>
+
+  <p>Добро пожаловать!</p>
+
+</div>
+
+<div class="buttons">
+
+  <button class="green" onclick="receive()">📥 Принять посылки</button>
+
+  <button onclick="deliver()">✅ Выдать посылки</button>
+
+  <button class="purple" onclick="upgrade()">⬆️ Улучшить ПВЗ</button>
+
+  <button class="orange" onclick="statistics()">📊 Статистика</button>
+
+  <button class="red" onclick="nextDay()">🌙 Новый день</button>
+
+</div>
+
+<div id="message">Начни работу своего ПВЗ!</div>
+
+<script>
+
+let money=500;
+
+let parcels=0;
+
+let day=1;
+
+let level=1;
+
+let total=0;
+
+function update(){
+
+ document.getElementById("money").textContent=money;
+
+ document.getElementById("parcels").textContent=parcels;
+
+ document.getElementById("day").textContent=day;
+
+}
+
+function say(t){
+
+ document.getElementById("message").textContent=t;
+
+}
+
+function receive(){
+
+ let n=Math.floor(Math.random()*6)+3;
+
+ parcels+=n;
+
+ total+=n;
+
+ say("🚚 Прибыло "+n+" новых посылок!");
+
+ update();
+
+}
+
+function deliver(){
+
+ if(parcels===0){
+
+  say("❌ Нет посылок!");
+
+  return;
+
+ }
+
+ let n=Math.min(parcels,Math.floor(Math.random()*4)+1);
+
+ parcels-=n;
+
+ let earned=n*120*level;
+
+ money+=earned;
+
+ say("🎉 Выдано "+n+" посылок! Заработано "+earned+"₸");
+
+ update();
+
+}
+
+function upgrade(){
+
+ let cost=level*1000;
+
+ if(money<cost){
+
+  say("❌ Нужно "+cost+"₸ для улучшения!");
+
+  return;
+
+ }
+
+ money-=cost;
+
+ level++;
+
+ say("🏪 ПВЗ улучшен! Уровень "+level);
+
+ update();
+
+}
+
+function nextDay(){
+
+ day++;
+
+ let income=level*250;
+
+ money+=income;
+
+ say("☀️ Новый день! Доход: "+income+"₸");
+
+ update();
+
+}
+
+function statistics(){
+
+ say("📊 Уровень: "+level+
+
+ " | Всего принято посылок: "+total+
+
+ " | Баланс: "+money+"₸");
+
+}
+
+update();
+
+</script>
+
+</body>
+
+</html>
